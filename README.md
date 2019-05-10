@@ -83,3 +83,7 @@ There is some code present and commented out in the `src/app.js` file relating t
 There is inconsistent authorisation and security on the existing endpoints. Almost all endpoints require a JWT bearer token for auth, but almost none actually do anything with it. Only the dockets endpoint uses it, and filters out all dockets to just your own. The exact security model is an open question, though some could be inferred (not being able to edit someone else's docket, etc).
 
 There is no implementation of blockchain calls, as there are no specific requirements.
+
+There may need to be some sort of flag on the entities to allow soft deletion.
+
+There is currently a logic gap where a user created with type=admin can see all users, dockets, etc. But it's not permitted to set that type except by another admin.
