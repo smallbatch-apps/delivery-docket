@@ -14,20 +14,18 @@ REST API for managing delivery dockets.
 | `dockets/:id/lots` | `GET` | Get the lots for a specific docket | `LotController.index` | ¹ |
 | `dockets/:id/lots` | `POST` | Create a lot on a docket | `LotController.store` |
 | `users` | `GET` | Get a list of all users | `UserController.index`
-| `users` | `POST` | Create a new user | `UserController.store` | ³ |
+| `users` | `POST` | Create a new user | `UserController.store` | ² |
 | `users/:id` | `GET` | Get a specific user | `UserController.show`
 | `users/:id` | `PATCH` | Update the user | `UserController.update`
-| `login` | `POST` | Attempt to login | `LoginController.authenticate` | ³ |
+| `login` | `POST` | Attempt to login | `LoginController.authenticate` | ² |
 
 All routes are prepended with `/api/`. All docket responses include lots and the declaration.
 
-There is no `logout` route, as the login does not create a session - it creates a stateless JWT which can simply be dropped by the client. There is no current way to patch or remove a specific lot. There are no endpoints for deleting or invalidating any entities.
+There is no `logout` route, as the login does not create a session - it creates a stateless JWT which can simply be dropped by the client. There is no current way to patch or remove a specific lot. There are no endpoints for deleting or invalidating any entities. It is not possible to do `GET lots/:id` because lots are not an independent document, but a subdocument of dockets.
 
 ¹ The route `GET dockets/:id` will also include lots, making this largely redundant.
 
-² It is not possible to do `GET lots/:id` because lots are not an independent document, but a subdocument of dockets.
-
-³ These routes are not protected by any form of authentication. All other routes require an authenticated user.
+² These routes are not protected by any form of authentication. All other routes require an authenticated user.
 
 ## Installation and Setup
 
