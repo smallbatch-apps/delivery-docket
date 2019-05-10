@@ -41,6 +41,12 @@ There is no `logout` route, as the login does not create a session - it creates 
 
 It is critically important that the host can serve as HTTPS, as the JWT bearer token **must** be served over HTTPS. The application serves as https, but lacking certificates can create local issues. The following article may help: https://medium.freecodecamp.org/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec
 
+## Data Model
+
+The data is stored in a MongoDB document database. The document model has two primary document entities. User and DeliveryDocket (typically shortened to Docket). The User is at present a very thin model. DeliveryDocket has a ref link to User, but has two types of subdocument. There are multiple Lots on a DeliveryDocket. There is also a single Declaration object per DeliveryDocket.
+
+The DeliveryDocket object itself is therefore quite minimal only really covering shipping and pickup details. The intent is that a DeliveryDocket document is made very quickly in the process, and then immediately afterwards Lots could be added at will. A declaration could be made at the end, or as part of the submission process. This is in contrast to making a large object and saving it in one big block.
+
 
 ## Usage
 
