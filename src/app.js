@@ -13,14 +13,7 @@ const app = express();
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
-const mongoConnectionString = util.format(
-  process.env.MONGO_CONNECTION_STRING,
-  process.env.MONGO_DB_USER,
-  process.env.MONGO_DB_PASS,
-  process.env.MONGO_DB_PATH
-);
-
-mongoose.connect(mongoConnectionString, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_CONNECTION_STRING, { useNewUrlParser: true });
 
 app.use(bodyParser.json());
 app.use(cors());

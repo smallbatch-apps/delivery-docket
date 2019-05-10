@@ -32,6 +32,7 @@ There is no `logout` route, as the login does not create a session - it creates 
 1. Clone this repository.
 2. Run `npm install`
 3. [Install mongodb](https://treehouse.github.io/installation-guides/mac/mongo-mac.html) and ensure that it is running with `mongod`.
+4. Provide two critical environment variables: `JWT_SECRET` and `MONGO_CONNECTION_STRING`. These can be added by creating a `.env` file with them present, or a range of other methods.
 4. Run the command `npm run serve` to start up the application.
 5. Navigate to https://localhost:3050/api
 6. Submit a post to the user post endpoint (code example below) using a tool such as [Postman](https://www.getpostman.com/)
@@ -75,3 +76,10 @@ For example, to create a new user `POST /api/users/`:
 }
 ```
 
+## Todo
+
+There is some code present and commented out in the `src/app.js` file relating to GraphQL implementation. This GraphQL setup was done as a proof of concept and has not been completed. It is missing critical mutations, but more importantly it has no authentication.
+
+There is inconsistent authorisation and security on the existing endpoints. Almost all endpoints require a JWT bearer token for auth, but almost none actually do anything with it. Only the dockets endpoint uses it, and filters out all dockets to just your own. The exact security model is an open question, though some could be inferred (not being able to edit someone else's docket, etc).
+
+There is no implementation of blockchain calls, as there are no specific requirements.
