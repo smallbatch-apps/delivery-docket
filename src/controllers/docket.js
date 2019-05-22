@@ -23,11 +23,15 @@ module.exports = {
   },
 
   async store(req, res){
-    const {carrier, brandNumber, pickUpDate, freightPayableBy, lots, declaration, user} = req.body.docket;
+
+    const user = req.user.id;
+
+    const {carrier, brandNumber, pickUpDate, freightPayableBy, lots = [], declaration = null} = req.body.docket;
 
     const docket = new DeliveryDocket({
       carrier, brandNumber,
-      lodgementDate: new Date,
+      creationDate: new Date(),
+      lodgementDate: null,
       pickUpDate: new Date(pickUpDate),
       freightPayableBy,
       lots,
@@ -38,9 +42,9 @@ module.exports = {
     const error = docket.validateSync();
 
     if (error) {
-      const errorMessages = Object.values(error.errors).map(error => ({
-        field: error.properties.path,
-        message: error.properties.message
+      const errorMessages = Object.values(error.errors).map(err => ({
+        field: err.properties.path,
+        message: err.properties.message
       }));
 
       res.status(400).json(errorMessages);
@@ -56,7 +60,6 @@ module.exports = {
     await DeliveryDocket.findByIdAndUpdate(id, req.body.docket);
 
     const docket = await DeliveryDocket.findById(id);
-
     res.json({docket});
   }
 };

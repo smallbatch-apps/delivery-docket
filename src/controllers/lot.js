@@ -17,10 +17,11 @@ module.exports = {
     const { lot } = req.body;
 
     const docket = await DeliveryDocket.findById(id).exec();
-
+    const lotLength = docket.lots.length;
     docket.lots.push(lot);
 
     const error = docket.validateSync();
+    const newLot = docket.lots[lotLength];
 
     if (error) {
       const errorMessages = Object.values(error.errors).map(error => ({
@@ -31,6 +32,7 @@ module.exports = {
       res.status(400).json(errorMessages);
       return;
     }
+
     await docket.save();
 
     const docketUrl = url.format({
@@ -41,6 +43,6 @@ module.exports = {
 
     res.status(201).links({
       docket: docketUrl,
-    }).json({lot});
+    }).json({lot: newLot});
   }
 }
